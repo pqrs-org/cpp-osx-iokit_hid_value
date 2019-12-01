@@ -29,12 +29,14 @@ public:
                                                           usage_(usage) {
   }
 
-  iokit_hid_value(IOHIDValueRef value) {
-    time_stamp_ = chrono::absolute_time_point(IOHIDValueGetTimeStamp(value));
-    integer_value_ = IOHIDValueGetIntegerValue(value);
-    if (auto element = IOHIDValueGetElement(value)) {
-      usage_page_ = iokit_hid_usage_page(IOHIDElementGetUsagePage(element));
-      usage_ = iokit_hid_usage(IOHIDElementGetUsage(element));
+  iokit_hid_value(IOHIDValueRef value) : iokit_hid_value() {
+    if (value) {
+      time_stamp_ = chrono::absolute_time_point(IOHIDValueGetTimeStamp(value));
+      integer_value_ = IOHIDValueGetIntegerValue(value);
+      if (auto element = IOHIDValueGetElement(value)) {
+        usage_page_ = iokit_hid_usage_page(IOHIDElementGetUsagePage(element));
+        usage_ = iokit_hid_usage(IOHIDElementGetUsage(element));
+      }
     }
   }
 

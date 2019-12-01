@@ -37,3 +37,11 @@ TEST_CASE("iokit_hid_value") {
   hid_value2.set_usage(pqrs::osx::iokit_hid_usage(4320));
   REQUIRE(hid_value1 != hid_value2);
 }
+
+TEST_CASE("iokit_hid_value nullptr") {
+  pqrs::osx::iokit_hid_value hid_value(nullptr);
+  REQUIRE(hid_value.get_time_stamp() == pqrs::osx::chrono::absolute_time_point(0));
+  REQUIRE(hid_value.get_integer_value() == 0);
+  REQUIRE(hid_value.get_usage_page() == std::nullopt);
+  REQUIRE(hid_value.get_usage() == std::nullopt);
+}
