@@ -1,5 +1,11 @@
 #pragma once
 
+// pqrs::osx::iokit_hid_value v1.0
+
+// (C) Copyright Takayama Fumihiko 2019.
+// Distributed under the Boost Software License, Version 1.0.
+// (See http://www.boost.org/LICENSE_1_0.txt)
+
 #include <IOKit/hid/IOHIDElement.h>
 #include <IOKit/hid/IOHIDValue.h>
 #include <optional>
