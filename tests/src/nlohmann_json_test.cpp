@@ -6,8 +6,8 @@ TEST_CASE("nlohmann_json") {
   {
     pqrs::osx::iokit_hid_value hid_value1(pqrs::osx::chrono::absolute_time_point(1234),
                                           1,
-                                          pqrs::osx::iokit_hid_usage_page(5678),
-                                          pqrs::osx::iokit_hid_usage(4321));
+                                          pqrs::osx::iokit_hid_usage_page::value_t(5678),
+                                          pqrs::osx::iokit_hid_usage::value_t(4321));
 
     nlohmann::json actual = hid_value1;
     auto expected = nlohmann::json::object(
