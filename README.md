@@ -9,8 +9,8 @@ A wrapper of `IOHIDValueRef`.
 
 cpp-osx-iokit_hid_value depends the following classes.
 
+- [pqrs::hid](https://github.com/pqrs-org/cpp-hid)
 - [pqrs::osx::chrono](https://github.com/pqrs-org/cpp-osx-chrono)
-- [pqrs::osx::iokit_types](https://github.com/pqrs-org/cpp-osx-iokit_types)
 
 ## Install
 

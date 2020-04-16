@@ -1,4 +1,4 @@
 catchorg/Catch2
 pqrs-org/cpp-json
+pqrs-org/cpp-hid
 pqrs-org/cpp-osx-chrono
-pqrs-org/cpp-osx-iokit_types
