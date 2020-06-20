@@ -1,6 +1,6 @@
 #pragma once
 
-// pqrs::osx::iokit_hid_element v1.1
+// pqrs::osx::iokit_hid_element v1.2
 
 // (C) Copyright Takayama Fumihiko 2020.
 // Distributed under the Boost Software License, Version 1.0.
@@ -30,7 +30,7 @@ public:
     return element_;
   }
 
-  IOHIDElementRef get_element(void) const {
+  IOHIDElementRef get_raw_ptr(void) const {
     if (element_) {
       return *element_;
     }
