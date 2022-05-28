@@ -1,47 +1,55 @@
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
-
+#include "nlohmann_json_test.hpp"
+#include <boost/ut.hpp>
 #include <pqrs/osx/iokit_hid_value.hpp>
 
-TEST_CASE("iokit_hid_value") {
-  pqrs::osx::iokit_hid_value hid_value1(pqrs::osx::chrono::absolute_time_point(1234),
-                                        1,
-                                        pqrs::hid::usage_page::value_t(5678),
-                                        pqrs::hid::usage::value_t(4321));
+int main(void) {
+  using namespace boost::ut;
+  using namespace boost::ut::literals;
 
-  REQUIRE(hid_value1.get_time_stamp() == pqrs::osx::chrono::absolute_time_point(1234));
-  REQUIRE(hid_value1.get_integer_value() == 1);
-  REQUIRE(hid_value1.get_usage_page() == pqrs::hid::usage_page::value_t(5678));
-  REQUIRE(hid_value1.get_usage() == pqrs::hid::usage::value_t(4321));
+  "iokit_hid_value"_test = [] {
+    pqrs::osx::iokit_hid_value hid_value1(pqrs::osx::chrono::absolute_time_point(1234),
+                                          1,
+                                          pqrs::hid::usage_page::value_t(5678),
+                                          pqrs::hid::usage::value_t(4321));
 
-  REQUIRE(hid_value1.conforms_to(pqrs::hid::usage_page::value_t(5678), pqrs::hid::usage::value_t(4321)) == true);
-  REQUIRE(hid_value1.conforms_to(pqrs::hid::usage_page::value_t(5679), pqrs::hid::usage::value_t(4321)) == false);
-  REQUIRE(hid_value1.conforms_to(pqrs::hid::usage_page::value_t(5678), pqrs::hid::usage::value_t(4320)) == false);
+    expect(hid_value1.get_time_stamp() == pqrs::osx::chrono::absolute_time_point(1234));
+    expect(hid_value1.get_integer_value() == 1);
+    expect(hid_value1.get_usage_page() == pqrs::hid::usage_page::value_t(5678));
+    expect(hid_value1.get_usage() == pqrs::hid::usage::value_t(4321));
 
-  auto hid_value2 = hid_value1;
-  REQUIRE(hid_value1 == hid_value2);
+    expect(hid_value1.conforms_to(pqrs::hid::usage_page::value_t(5678), pqrs::hid::usage::value_t(4321)) == true);
+    expect(hid_value1.conforms_to(pqrs::hid::usage_page::value_t(5679), pqrs::hid::usage::value_t(4321)) == false);
+    expect(hid_value1.conforms_to(pqrs::hid::usage_page::value_t(5678), pqrs::hid::usage::value_t(4320)) == false);
 
-  hid_value2 = hid_value1;
-  hid_value2.set_time_stamp(pqrs::osx::chrono::absolute_time_point(1235));
-  REQUIRE(hid_value1 != hid_value2);
+    auto hid_value2 = hid_value1;
+    expect(hid_value1 == hid_value2);
 
-  hid_value2 = hid_value1;
-  hid_value2.set_integer_value(0);
-  REQUIRE(hid_value1 != hid_value2);
+    hid_value2 = hid_value1;
+    hid_value2.set_time_stamp(pqrs::osx::chrono::absolute_time_point(1235));
+    expect(hid_value1 != hid_value2);
 
-  hid_value2 = hid_value1;
-  hid_value2.set_usage_page(pqrs::hid::usage_page::value_t(5679));
-  REQUIRE(hid_value1 != hid_value2);
+    hid_value2 = hid_value1;
+    hid_value2.set_integer_value(0);
+    expect(hid_value1 != hid_value2);
 
-  hid_value2 = hid_value1;
-  hid_value2.set_usage(pqrs::hid::usage::value_t(4320));
-  REQUIRE(hid_value1 != hid_value2);
-}
+    hid_value2 = hid_value1;
+    hid_value2.set_usage_page(pqrs::hid::usage_page::value_t(5679));
+    expect(hid_value1 != hid_value2);
 
-TEST_CASE("iokit_hid_value nullptr") {
-  pqrs::osx::iokit_hid_value hid_value(nullptr);
-  REQUIRE(hid_value.get_time_stamp() == pqrs::osx::chrono::absolute_time_point(0));
-  REQUIRE(hid_value.get_integer_value() == 0);
-  REQUIRE(hid_value.get_usage_page() == std::nullopt);
-  REQUIRE(hid_value.get_usage() == std::nullopt);
+    hid_value2 = hid_value1;
+    hid_value2.set_usage(pqrs::hid::usage::value_t(4320));
+    expect(hid_value1 != hid_value2);
+  };
+
+  "iokit_hid_value nullptr"_test = [] {
+    pqrs::osx::iokit_hid_value hid_value(nullptr);
+    expect(hid_value.get_time_stamp() == pqrs::osx::chrono::absolute_time_point(0));
+    expect(hid_value.get_integer_value() == 0);
+    expect(hid_value.get_usage_page() == std::nullopt);
+    expect(hid_value.get_usage() == std::nullopt);
+  };
+
+  run_nlohmann_json_test();
+
+  return 0;
 }

@@ -13,7 +13,6 @@ project (test)
 
 add_executable(
   test
-  nlohmann_json_test.cpp
   test.cpp
 )
 
