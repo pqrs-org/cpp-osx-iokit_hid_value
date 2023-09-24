@@ -10,7 +10,10 @@ void run_nlohmann_json_test(void) {
       pqrs::osx::iokit_hid_value hid_value1(pqrs::osx::chrono::absolute_time_point(1234),
                                             1,
                                             pqrs::hid::usage_page::value_t(5678),
-                                            pqrs::hid::usage::value_t(4321));
+                                            pqrs::hid::usage::value_t(4321),
+                                            1234, // loglcal_max
+                                            567   // logical_min
+      );
 
       nlohmann::json actual = hid_value1;
       auto expected = nlohmann::json::object(
@@ -19,6 +22,8 @@ void run_nlohmann_json_test(void) {
               {"integer_value", 1},
               {"usage_page", 5678},
               {"usage", 4321},
+              {"logical_max", 1234},
+              {"logical_min", 567},
           });
       expect(actual == expected);
 
@@ -33,6 +38,8 @@ void run_nlohmann_json_test(void) {
       expect(hid_value.get_integer_value() == 0);
       expect(hid_value.get_usage_page() == std::nullopt);
       expect(hid_value.get_usage() == std::nullopt);
+      expect(hid_value.get_logical_max() == std::nullopt);
+      expect(hid_value.get_logical_min() == std::nullopt);
     }
 
     try {
@@ -76,6 +83,24 @@ void run_nlohmann_json_test(void) {
       expect(false);
     } catch (pqrs::json::unmarshal_error& ex) {
       expect(std::string("`usage` must be number, but is `null`") == ex.what());
+    } catch (...) {
+      expect(false);
+    }
+
+    try {
+      nlohmann::json::object({{"logical_max", nullptr}}).get<pqrs::osx::iokit_hid_value>();
+      expect(false);
+    } catch (pqrs::json::unmarshal_error& ex) {
+      expect(std::string("`logical_max` must be number, but is `null`") == ex.what());
+    } catch (...) {
+      expect(false);
+    }
+
+    try {
+      nlohmann::json::object({{"logical_min", nullptr}}).get<pqrs::osx::iokit_hid_value>();
+      expect(false);
+    } catch (pqrs::json::unmarshal_error& ex) {
+      expect(std::string("`logical_min` must be number, but is `null`") == ex.what());
     } catch (...) {
       expect(false);
     }

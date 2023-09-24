@@ -10,12 +10,17 @@ int main(void) {
     pqrs::osx::iokit_hid_value hid_value1(pqrs::osx::chrono::absolute_time_point(1234),
                                           1,
                                           pqrs::hid::usage_page::value_t(5678),
-                                          pqrs::hid::usage::value_t(4321));
+                                          pqrs::hid::usage::value_t(4321),
+                                          1234, // loglcal_max
+                                          567   // logical_min
+    );
 
     expect(hid_value1.get_time_stamp() == pqrs::osx::chrono::absolute_time_point(1234));
     expect(hid_value1.get_integer_value() == 1);
     expect(hid_value1.get_usage_page() == pqrs::hid::usage_page::value_t(5678));
     expect(hid_value1.get_usage() == pqrs::hid::usage::value_t(4321));
+    expect(hid_value1.get_logical_max() == 1234l);
+    expect(hid_value1.get_logical_min() == 567l);
 
     expect(hid_value1.conforms_to(pqrs::hid::usage_page::value_t(5678), pqrs::hid::usage::value_t(4321)) == true);
     expect(hid_value1.conforms_to(pqrs::hid::usage_page::value_t(5679), pqrs::hid::usage::value_t(4321)) == false);
@@ -38,6 +43,14 @@ int main(void) {
 
     hid_value2 = hid_value1;
     hid_value2.set_usage(pqrs::hid::usage::value_t(4320));
+    expect(hid_value1 != hid_value2);
+
+    hid_value2 = hid_value1;
+    hid_value2.set_logical_max(1233);
+    expect(hid_value1 != hid_value2);
+
+    hid_value2 = hid_value1;
+    hid_value2.set_logical_min(1233);
     expect(hid_value1 != hid_value2);
   };
 
