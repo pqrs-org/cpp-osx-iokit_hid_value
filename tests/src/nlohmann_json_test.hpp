@@ -1,7 +1,7 @@
 #include <boost/ut.hpp>
 #include <pqrs/osx/iokit_hid_value/extra/nlohmann_json.hpp>
 
-void run_nlohmann_json_test(void) {
+void run_nlohmann_json_test() {
   using namespace boost::ut;
   using namespace boost::ut::literals;
 

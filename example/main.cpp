@@ -1,6 +1,6 @@
 #include <pqrs/osx/iokit_hid_value.hpp>
 
-int main(void) {
+int main() {
   pqrs::osx::iokit_hid_value hid_value(pqrs::osx::chrono::absolute_time_point(1000),
                                        1,
                                        pqrs::hid::usage_page::keyboard_or_keypad,
